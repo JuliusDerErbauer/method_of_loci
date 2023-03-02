@@ -1,4 +1,5 @@
-from view_proxy import ViewProxy
+from view.view_proxy import ViewProxy
+
 
 class RoomProxy(ViewProxy):
     def __init__(self, database, room_id):
@@ -6,7 +7,6 @@ class RoomProxy(ViewProxy):
         self.room_id = room_id
         object = self.database.get_room(self.room_id)
         self.name = object["name"][0]
-        self.topic = object["topic"][0]
 
     def list_objects(self, view):
         objects = []
@@ -18,11 +18,11 @@ class RoomProxy(ViewProxy):
 
     def create_object(self, view):
         name = view.request_input("Enter name of the object: ")
-        topic = view.request_input("Enter topic of the object: ")
+        topic = view.request_input("Enter suptopic of the object: ")
         self.database.create_object(self.room_id, name, topic)
+
     def show(self, view):
         print(f"Welcome to {self.name}")
-        print(f"Topic: {self.topic}")
         while True:
             options = ["List objects", "Create new object", "Exit"]
             chosen_option = view.get_chosen_option(options)

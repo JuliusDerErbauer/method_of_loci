@@ -39,14 +39,14 @@ class SpaceProxy(ViewProxy):
         print(f"Topic: {self.topic}")
         print(f"Is real place: {self.is_real_space}")
         while True:
-            options = ["List objects", "Create new object", "Visit room", "Exit"]
+            options = ["Visit room", "Create new object", "List objects", "Exit"]
             chosen_option = view.get_chosen_option(options)
-            if chosen_option == "List objects":
-                self.list_rooms(view)
-            elif chosen_option == "Create new object":
-                self.create_room(view)
-            elif chosen_option == "Visit room":
+            if chosen_option == "Visit room":
                 self.visit_room(view)
+            elif chosen_option == "Create new room":
+                self.create_room(view)
+            elif chosen_option == "List rooms":
+                self.list_rooms(view)
             elif chosen_option == "Exit":
                 break
 

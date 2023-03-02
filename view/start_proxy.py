@@ -49,14 +49,14 @@ class StartProxy(ViewProxy):
             self.settings.set_setting("name", name)
         print(f"Welcome {name} to the memory trainer what do you want to do?")
         while True:
-            options = ["List places", "Create new place", "Visit Place", "Learn", "Exit"]
+            options = ["Visit Place", "Create new place", "List places", "Learn", "Exit"]
             chosen_option = view.get_chosen_option(options)
-            if chosen_option == "List places":
-                self.list_places(view)
+            if chosen_option == "Visit Place":
+                self.visit_space(view)
             elif chosen_option == "Create new place":
                 self.create_space(view)
-            elif chosen_option == "Visit Place":
-                self.visit_space(view)
+            elif chosen_option == "List places":
+                self.list_places(view)
             elif chosen_option == "Learn":
                 self.learn(view)
             elif chosen_option == "Exit":
