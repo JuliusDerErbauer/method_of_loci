@@ -21,8 +21,8 @@ class View:
 
     def show_elements(self, elements):
         print("Places:")
-        for i, place in enumerate(elements):
-            print(f"{i+1}.{place}")
+        for i, element in enumerate(elements):
+            print(f"{i+1}. {element}")
 
     def request_input(self, message):
         return input(message)
@@ -32,3 +32,6 @@ class View:
         while (i != "y" and i != "n"):
             i = input(f"{message} (y/n): ")
         return i == "y"
+
+    def show_message(self, message):
+        print(message)

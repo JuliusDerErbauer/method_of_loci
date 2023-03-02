@@ -5,3 +5,4 @@ typing-extensions==4.5.0
 wheel==0.38.4
 psycopg2
 psycopg2-binary
+pandas

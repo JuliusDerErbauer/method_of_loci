@@ -1,4 +1,7 @@
 from sqlalchemy import create_engine, text
+from pandas import DataFrame
+
+from view.space_proxy import SpaceProxy
 
 SQL_QUERYS = {
     "create_space": "INSERT INTO space (name, topic, is_real_space) VALUES ('{name}', '{topic}', {is_real_space});",
@@ -23,12 +26,15 @@ class Database:
     def get_space_ids(self):
         sql = text(SQL_QUERYS["space_ids"])
         with self.engine.connect() as connection:
-            return connection.execute(sql).fetchall()
+            return DataFrame(connection.execute(sql).fetchall())
+
+    def get_space_proxy(self, space_id):
+        return SpaceProxy()
 
     def get_space(self, space_id):
         sql = text(SQL_QUERYS["space"].format(space_id=space_id))
         with self.engine.connect() as connection:
-            return connection.execute(sql).fetchall()
+            return DataFrame(connection.execute(sql).fetchall())
 
     def create_space(self, name, topic, is_real_space):
         query = text(SQL_QUERYS["create_space"].format(name=name, topic=topic, is_real_space=is_real_space))
@@ -40,12 +46,12 @@ class Database:
     def get_room_ids(self, space_id):
         sql = text(SQL_QUERYS["room_ids"].format(space_id=space_id))
         with self.engine.connect() as connection:
-            return connection.execute(sql).fetchall()
+            return DataFrame(connection.execute(sql).fetchall())
 
     def get_room(self, room_id):
         sql = text(SQL_QUERYS["room"].format(room_id=room_id))
         with self.engine.connect() as connection:
-            return connection.execute(sql).fetchall()
+            return DataFrame(connection.execute(sql).fetchall())
 
     def create_room(self, name, description, space_id):
         sql = text(SQL_QUERYS["create_room"].format(name=name, description=description, space_id=space_id))
@@ -56,7 +62,7 @@ class Database:
     def get_object_ids(self, room_id):
         sql = text(SQL_QUERYS["object_ids"].format(room_id=room_id))
         with self.engine.connect() as connection:
-            return connection.execute(sql).fetchall()
+            return DataFrame(connection.execute(sql).fetchall())
 
     def get_object(self, object_id):
         sql = text(SQL_QUERYS["object"].format(object_id=object_id))
@@ -67,3 +73,19 @@ class Database:
         sql = text(SQL_QUERYS["create_object"].format(name=name, description=description, room_id=room_id))
         with self.engine.connect() as connection:
             connection.execute(sql)
+
+    def get_learn_object(self):
+        sql = text("SELECT * FROM object WHERE next_learn_time < NOW() ORDER BY next_learn_time ASC LIMIT 1;")
+        with self.engine.connect() as connection:
+            data = connection.execute(sql).fetchall()
+            connection.commit()
+            return DataFrame(data)
+
+    def know_object(self, object_id):
+        sql = text("UPDATE object SET learning_status_id = learning_status_id + 1,"
+                   " next_learn_time = NOW() + "
+                   "(SELECT lenght from learning_status as l where l.learning_status_id = object.learning_status_id) "
+                   "WHERE object.id = {object_id};".format(object_id=object_id))
+        with self.engine.connect() as connection:
+            connection.execute(sql)
+            connection.commit()
