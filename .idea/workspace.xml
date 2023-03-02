@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d0ba99b5-d968-4b2d-847d-f1682720f2ef" name="Changes" comment="written other layers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/room_proxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/room_proxy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/space_proxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/space_proxy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/start_proxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/start_proxy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/view_proxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/view_proxy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/applicaton.py" beforeDir="false" afterPath="$PROJECT_DIR$/applicaton.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +119,7 @@
       <workItem from="1677631278625" duration="752000" />
       <workItem from="1677659960377" duration="2547000" />
       <workItem from="1677662562024" duration="172000" />
-      <workItem from="1677687917362" duration="18193000" />
+      <workItem from="1677687917362" duration="18863000" />
     </task>
     <task id="LOCAL-00001" summary="First Version">
       <created>1677687966545</created>
@@ -146,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677792526465</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="written other layers">
+      <created>1677794680037</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1677794680037</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,6 +193,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/methodofloci$main.coverage" NAME="main Coverage Results" MODIFIED="1677630319068" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/methodofloci$applicaton.coverage" NAME="applicaton Coverage Results" MODIFIED="1677794365669" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/methodofloci$applicaton.coverage" NAME="applicaton Coverage Results" MODIFIED="1677794814868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

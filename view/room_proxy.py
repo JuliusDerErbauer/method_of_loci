@@ -18,8 +18,9 @@ class RoomProxy(ViewProxy):
 
     def create_object(self, view):
         name = view.request_input("Enter name of the object: ")
-        topic = view.request_input("Enter suptopic of the object: ")
-        self.database.create_object(self.room_id, name, topic)
+        story = view.request_input("Enter story of the object: ")
+        subtopic = view.request_input("Enter subtopic of the object: ")
+        self.database.create_object(name, story, subtopic, self.room_id)
 
     def show(self, view):
         print(f"Welcome to {self.name}")

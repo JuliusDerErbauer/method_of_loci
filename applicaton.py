@@ -1,3 +1,5 @@
+import os
+
 from controller import Controller
 from database import Database
 from settings import Settings

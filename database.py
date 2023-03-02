@@ -10,7 +10,7 @@ SQL_QUERYS = {
     "create_room": "INSERT INTO room (name, description, space_id) VALUES ('{name}', '{description}', {space_id});",
     "room_ids": "SELECT id FROM room WHERE room.space_id = {space_id} ORDER BY id;",
     "room": "SELECT * FROM room WHERE room.id = {room_id};",
-    "create_object": "INSERT INTO object (name, description, room_id) VALUES ('{name}', '{description}', {room_id});",
+    "create_object": "INSERT INTO object (name, story, subtopic, room_id) VALUES ('{name}', '{description}', {room_id});",
     "object_ids": "SELECT id FROM object WHERE object.room_id = {room_id} ORDER BY id;",
     "object": "SELECT * FROM object WHERE object.id = {object_id};",
 }
@@ -69,8 +69,8 @@ class Database:
         with self.engine.connect() as connection:
             return DataFrame(connection.execute(sql).fetchall())
 
-    def create_object(self, name, description, room_id):
-        sql = text(SQL_QUERYS["create_object"].format(name=name, description=description, room_id=room_id))
+    def create_object(self, name, story, subtopic, room_id):
+        sql = text(SQL_QUERYS["create_object"].format(name=name, story=story, subtopic=subtopic, room_id=room_id))
         with self.engine.connect() as connection:
             connection.execute(sql)
 

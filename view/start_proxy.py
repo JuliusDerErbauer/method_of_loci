@@ -16,10 +16,10 @@ class StartProxy(ViewProxy):
         view.show_elements(spaces)
 
     def create_space(self, view):
-        name = view.request_input("Enter name of the place: ")
-        topic = view.request_input("Enter topic of the place: ")
-        is_real_place = view.get_boolean_input("Is this a real place?")
-        self.database.create_space(name, topic, is_real_place)
+        name = view.request_input("Enter name of the space: ")
+        topic = view.request_input("Enter topic of the space: ")
+        is_real_space = view.get_boolean_input("Is it a real space?")
+        self.database.create_space(name, topic, is_real_space)
 
     def visit_space(self, view):
         spaces = []
