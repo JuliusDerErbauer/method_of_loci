@@ -1,3 +1,4 @@
+from view.space_proxy import SpaceProxy
 from view.view_proxy import ViewProxy
 
 
@@ -21,7 +22,25 @@ class StartProxy(ViewProxy):
         self.database.create_space(name, topic, is_real_place)
 
     def visit_space(self, view):
-        pass
+        spaces = []
+        ids = self.database.get_space_ids()
+        for id in ids["id"]:
+            space = str(self.database.get_space(id)["name"][0])
+            spaces.append(space)
+        space = view.get_chosen_option(spaces)
+        SpaceProxy(self.database, ids["id"][spaces.index(space)]).show(view)
+
+    def learn(self, view):
+        while True:
+            object = self.database.get_learn_object()
+            if len(object) == 0:
+                view.show_message("There are no objects to learn")
+                break
+            view.show_message(object["name"][0])
+            if (view.get_boolean_input("Did you know this object?")):
+                self.database.know_object(object["id"][0])
+            else:
+                self.database.message("Thema: " + object["subtopic"][0])
 
     def show(self, view):
         name = self.settings.get_setting("name")
@@ -37,26 +56,9 @@ class StartProxy(ViewProxy):
             elif chosen_option == "Create new place":
                 self.create_space(view)
             elif chosen_option == "Visit Place":
-                spaces = []
-                ids = self.database.get_space_ids()
-                for id in ids["id"]:
-                    space = str(self.database.get_space(id)["name"][0])
-                    spaces.append(space)
-                space = view.get_chosen_option(spaces)
-
                 self.visit_space(view)
             elif chosen_option == "Learn":
-                while True:
-                    object = self.database.get_learn_object()
-                    if len(object) == 0:
-                        view.show_message("There are no objects to learn")
-                        break
-                    view.show_message(object["name"][0])
-                    if(view.get_boolean_input("Did you know this object?")):
-                        self.database.know_object(object["id"][0])
-                    else:
-                        self.database.message("Thema: " + object["subtopic"][0])
-
+                self.learn(view)
             elif chosen_option == "Exit":
                 break
 

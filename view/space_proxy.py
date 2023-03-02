@@ -1,3 +1,4 @@
+from view.room_proxy import RoomProxy
 from view.view_proxy import ViewProxy
 
 
@@ -11,8 +12,43 @@ class SpaceProxy(ViewProxy):
         self.topic = object["topic"][0]
         self.is_real_space = object["is_real_space"][0]
 
-    def show(self):
-        pass
+    def list_rooms(self, view):
+        rooms = []
+        ids = self.database.get_room_ids(self.space_id)
+        for id in ids["id"]:
+            room = str(self.database.get_room(id)["name"][0])
+            rooms.append(room)
+        view.show_elements(rooms)
+
+    def create_room(self, view):
+        name = view.request_input("Enter name of the room: ")
+        topic = view.request_input("Enter topic of the room: ")
+        self.database.create_room(self.space_id, name, topic)
+
+    def visit_room(self, view):
+        rooms = []
+        ids = self.database.get_room_ids(self.space_id)
+        for id in ids["id"]:
+            room = str(self.database.get_room(id)["name"][0])
+            rooms.append(room)
+        room = view.get_chosen_option(rooms)
+        RoomProxy(self.database, ids["id"][rooms.index(room)]).show(view)
+
+    def show(self, view):
+        print(f"Welcome to {self.name}")
+        print(f"Topic: {self.topic}")
+        print(f"Is real place: {self.is_real_space}")
+        while True:
+            options = ["List objects", "Create new object", "Visit room", "Exit"]
+            chosen_option = view.get_chosen_option(options)
+            if chosen_option == "List objects":
+                self.list_rooms(view)
+            elif chosen_option == "Create new object":
+                self.create_room(view)
+            elif chosen_option == "Visit room":
+                self.visit_room(view)
+            elif chosen_option == "Exit":
+                break
 
     def create(self):
         pass

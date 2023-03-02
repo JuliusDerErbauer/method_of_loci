@@ -5,6 +5,7 @@ class View:
         print()
         print("Choose an option:")
         chosen = False
+        i = 0
         while not chosen:
             for i, option in enumerate(options):
                 print(f"{i + 1}. {option}")
@@ -18,6 +19,25 @@ class View:
         print(f"You chose {options[i - 1]}")
         print()
         return options[i - 1]
+
+    def get_chose_option_by_id(self, options):
+        print()
+        print("Choose an option:")
+        chosen = False
+        i = 0
+        while not chosen:
+            for i, option in enumerate(options):
+                print(f"{i + 1}. {option['name'][0]}")
+            i = input()
+            try:
+                i = int(i)
+                chosen = True
+            except ValueError:
+                print(f"{i} is not a valid option")
+
+        print(f"You chose {options['name'][0]}")
+        print()
+        return options['id'][i - 1]
 
     def show_elements(self, elements):
         print("Places:")
