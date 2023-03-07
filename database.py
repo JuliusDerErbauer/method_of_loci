@@ -1,3 +1,5 @@
+from json import load
+
 from sqlalchemy import create_engine, text
 from pandas import DataFrame
 
@@ -19,8 +21,13 @@ CONNECTION_STING = "postgresql://{host}:{port}/{database}?user={user}&password={
 
 
 class Database:
-    def __init__(self, database_describtor):
-        self.engine = create_engine(CONNECTION_STING.format(**database_describtor))
+    def __init__(self):
+        self.standart_path = 'dicts/settings.json'
+        self.database_describtor = {}
+        with open(self.standart_path, 'r') as f:
+            self.database_describtor = load(f)
+
+        self.engine = create_engine(CONNECTION_STING.format(**self.database_describtor))
 
     # SPACE METHODS
     def get_space_ids(self):
