@@ -7,10 +7,10 @@ SQL_QUERYS = {
     "create_space": "INSERT INTO space (name, topic, is_real_space) VALUES ('{name}', '{topic}', {is_real_space});",
     "space_ids": "SELECT id FROM space ORDER BY id;",
     "space": "SELECT * FROM space WHERE space.id = {space_id};",
-    "create_room": "INSERT INTO room (name, description, space_id) VALUES ('{name}', '{description}', {space_id});",
+    "create_room": "INSERT INTO room (name, space_id) VALUES ('{name}', {space_id});",
     "room_ids": "SELECT id FROM room WHERE room.space_id = {space_id} ORDER BY id;",
     "room": "SELECT * FROM room WHERE room.id = {room_id};",
-    "create_object": "INSERT INTO object (name, story, subtopic, room_id) VALUES ('{name}', '{description}', {room_id});",
+    "create_object": "INSERT INTO object (name, story, subtopic, room_id) VALUES ('{name}', '{story}', '{subtopic}', '{room_id}');",
     "object_ids": "SELECT id FROM object WHERE object.room_id = {room_id} ORDER BY id;",
     "object": "SELECT * FROM object WHERE object.id = {object_id};",
 }
@@ -28,9 +28,6 @@ class Database:
         with self.engine.connect() as connection:
             return DataFrame(connection.execute(sql).fetchall())
 
-    def get_space_proxy(self, space_id):
-        return SpaceProxy()
-
     def get_space(self, space_id):
         sql = text(SQL_QUERYS["space"].format(space_id=space_id))
         with self.engine.connect() as connection:
@@ -41,6 +38,7 @@ class Database:
 
         with self.engine.connect() as connection:
             connection.execute(query)
+            connection.commit()
 
     # ROOM METHODS
     def get_room_ids(self, space_id):
@@ -53,10 +51,11 @@ class Database:
         with self.engine.connect() as connection:
             return DataFrame(connection.execute(sql).fetchall())
 
-    def create_room(self, name, description, space_id):
-        sql = text(SQL_QUERYS["create_room"].format(name=name, description=description, space_id=space_id))
+    def create_room(self, name, space_id):
+        sql = text(SQL_QUERYS["create_room"].format(name=name, space_id=space_id))
         with self.engine.connect() as connection:
             connection.execute(sql)
+            connection.commit()
 
     # OBJECT METHODS
     def get_object_ids(self, room_id):
@@ -73,6 +72,14 @@ class Database:
         sql = text(SQL_QUERYS["create_object"].format(name=name, story=story, subtopic=subtopic, room_id=room_id))
         with self.engine.connect() as connection:
             connection.execute(sql)
+            connection.commit()
+
+    def update_object(self, object_id, name, story, subtopic):
+        sql = text("UPDATE object SET name = '{name}', story = '{story}', subtopic = '{subtopic}' WHERE id = {object_id};".format(
+            name=name, story=story, subtopic=subtopic, object_id=object_id))
+        with self.engine.connect() as connection:
+            connection.execute(sql)
+            connection.commit()
 
     def get_learn_object(self):
         sql = text("SELECT * FROM object WHERE next_learn_time < NOW() ORDER BY next_learn_time ASC LIMIT 1;")

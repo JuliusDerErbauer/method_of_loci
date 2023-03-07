@@ -12,7 +12,10 @@ class View:
             i = input()
             try:
                 i = int(i)
-                chosen = True
+                if i in range(1, len(options) + 1):
+                    chosen = True
+                else:
+                    print(f"{i} is not a valid option")
             except ValueError:
                 print(f"{i} is not a valid option")
 

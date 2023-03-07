@@ -22,8 +22,7 @@ class SpaceProxy(ViewProxy):
 
     def create_room(self, view):
         name = view.request_input("Enter name of the room: ")
-        topic = view.request_input("Enter topic of the room: ")
-        self.database.create_room(self.space_id, name, topic)
+        self.database.create_room(name, self.space_id)
 
     def visit_room(self, view):
         rooms = []
@@ -39,7 +38,7 @@ class SpaceProxy(ViewProxy):
         print(f"Topic: {self.topic}")
         print(f"Is real place: {self.is_real_space}")
         while True:
-            options = ["Visit room", "Create new object", "List objects", "Exit"]
+            options = ["Visit room", "Create new room", "List rooms", "Exit"]
             chosen_option = view.get_chosen_option(options)
             if chosen_option == "Visit room":
                 self.visit_room(view)

@@ -1,4 +1,4 @@
-import os
+from os import path, chdir
 
 from controller import Controller
 from database import Database
@@ -33,6 +33,7 @@ class Application:
 
 
 if __name__ == "__main__":
+    chdir(path.dirname(path.abspath(__file__)))
     a = Application()
     a.start()
     a.stop()
